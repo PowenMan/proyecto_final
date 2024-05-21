@@ -28,6 +28,14 @@ app.get('/service', (req, res) => {
     res.render('service');
 });
 
+app.get('/blog', (req, res) => {
+    res.render('blog');
+});
+
+app.get('/blog-single', (req, res) => {
+    res.render('blog-single');
+});
+
 //Inicio server
 app.listen(PORT, () => {
     console.log(`Servidor iniciado en el puerto:${PORT}`);
