@@ -36,6 +36,10 @@ app.get('/blog-single', (req, res) => {
     res.render('blog-single');
 });
 
+app.get('/single', (req, res) => {
+    res.render('single');
+});
+
 //Inicio server
 app.listen(PORT, () => {
     console.log(`Servidor iniciado en el puerto:${PORT}`);
