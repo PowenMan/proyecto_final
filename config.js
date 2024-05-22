@@ -11,4 +11,12 @@ app.use(express.static("public"));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'public/views'));
 
-module.exports = { app, PORT };
+//Configuración base de datos
+const dbConfig = {
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'liberty'
+}
+
+module.exports = { app, PORT, dbConfig };
