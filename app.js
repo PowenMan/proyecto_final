@@ -56,7 +56,7 @@ app.post('/submitPost', (req, res) => {
             res.send('Error al insertar post');
         }else {
             console.log(result);
-            res.render('blog-single', {message: 'Gracias por comentar este post entra a verificación.'});
+            res.redirect('/blog-single?message=Gracias por comentar este post entra a verificación.');
             //res.send('Usuario insertado con exito!');
         }
     });
