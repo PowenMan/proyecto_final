@@ -43,7 +43,7 @@
         </div>
     </div>
         <div class="comments mt-5">
-            <h3 class="post-content-title">Comments (4)</h3>
+            <h3 class="post-content-title">Comments (<%= totalPosts %>)</h3>
 
             <!--post generados desde la base de datos-->
             <% posts.forEach(post => { %>
@@ -83,6 +83,34 @@
                 </script>
                 
             <% } %>
+
+             <!-- Paginación -->
+            <div class="pagination">
+                <ul>
+                    <!-- Enlace para página anterior -->
+                    <li>
+                        <a href="/blog-single?page=<%= currentPage > 1 ? currentPage - 1 : 1 %>" class="<%= currentPage === 1 ? 'not-allowed' : '' %>">
+                            <span class="fa fa-angle-double-left" aria-hidden="true"></span>
+                        </a>
+                    </li>
+
+                    <!-- Enlaces para cada página -->
+                    <% for (let i = 1; i <= totalPages; i++) { %>
+                        <li>
+                            <a href="/blog-single?page=<%= i %>" class="<%= currentPage === i ? 'active' : '' %>"><%= i %></a>
+                        </li>
+                    <% } %>
+
+                    <!-- Enlace para página siguiente -->
+                    <li>
+                        <a href="/blog-single?page=<%= currentPage < totalPages ? currentPage + 1 : totalPages %>" class="<%= currentPage === totalPages ? 'not-allowed' : '' %>">
+                            <span class="fa fa-angle-double-right" aria-hidden="true"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Fin paginación -->
+
             <h3 class="post-content-title">Leave A Message</h3>
             <div class="form-commets mt-5">
                 <form action="/submitPost" method="post">

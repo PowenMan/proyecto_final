@@ -64,13 +64,27 @@ app.post('/submitPost', (req, res) => {
 
 //Ruta para listar los post
 app.get('/blog-single', (req, res) => {
-    const sql = 'SELECT * FROM pots';
-    db.query(sql, (err, results) => {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const offset = (page - 1) * limit;
+
+    const sql = 'SELECT * FROM pots LIMIT ? OFFSET ?';
+    db.query(sql, [limit, offset], (err, results) => {
         if(err) {
             return res.status(500).send('Error al listar los post');
         }
-        const message = req.query.message || null;
-        res.render('blog-single', { posts: results, message });
+
+        const countSql = 'SELECT COUNT(*) AS count FROM pots';
+        db.query(countSql, (err, countResult) => {
+            if(err) {
+                return res.status(500).send('Error al contar los post');
+            }
+            const totalPosts = countResult[0].count;
+            const totalPages = Math.ceil(totalPosts / limit);
+            const message = req.query.message || null;
+
+            res.render('blog-single', { posts: results, totalPosts: totalPosts, message, totalPages, currentPage: page });
+        });
     });
 });
 
