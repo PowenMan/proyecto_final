@@ -10,7 +10,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/contact', (req, res) => {
-    res.render('contact');
+    const message = req.query.message || null;
+    res.render('contact', { message: null });
 });
 
 app.get('/about', (req, res) => {
@@ -43,7 +44,8 @@ app.post('/SubmitContacto', (req, res) => {
             res.send('Error al insertar usuario');
         }else {
             console.log(result);
-            res.send('Usuario insertado con exito!');
+            res.render('contact', {message: 'Nos pondremos en contacto contigo en la brevedad.'});
+            //res.send('Usuario insertado con exito!');
         }
     });
 });

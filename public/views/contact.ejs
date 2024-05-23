@@ -73,7 +73,23 @@
                 <!-- //contact address -->
                  <!-- contact form -->
                  <div class="contacts12-main col-lg-8 mt-lg-0 mt-5">
-                   
+                    <% if (message) { %>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                Swal.fire({
+                                    title: 'Mensaje recibido con éxito!',
+                                    text: '<%= message %>',
+                                    icon: '<%= message.includes("Error") ? "error" : "seccess" %>',
+                                    confirmButtonText: 'Cerrar'
+                                }).then((result) => {
+                                    if(result.isConfirmed) {
+                                        window.location.href = '/contact';
+                                    }
+                                });
+                            });
+                        </script>
+                        
+                    <% } %>
                     <form action="/SubmitContacto" method="post" class="main-input">
                         <div class="top-inputs d-grid">
                             <input type="text" placeholder="Name" name="nombre" id="nombre" required="">
