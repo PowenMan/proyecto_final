@@ -44,83 +44,53 @@
     </div>
         <div class="comments mt-5">
             <h3 class="post-content-title">Comments (4)</h3>
-            <div class="media mt-5 bod-1">
-                <div class="img-circle">
-                <img src="../images/c1.jpg" class="img-fluid" alt="...">
-                </div>
-                <div class="media-body">
-                    <div class="medi-top mb-3">
-                <a href="#URL" class="name mt-0">Latham</a> 
-                <span>11 may 2020 </span>
-                </div>
-                <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus
-                    odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate
-                    fringilla. Donec lacinia congue felis in faucibus.</p>
-                    <a href="#reply" class="rep mt-3">Reply</a>
-                    <div class="media mt-4 bod-2">
-                    <a class="img-circle img-circle-sm" href="#">
-                        <img src="../images/c2.jpg" class="img-fluid" alt="...">
-                    </a>
-                    <div class="media-body">
-                        <div class="medi-top mb-3">
-                            <a href="#URL" class="name mt-0">Watlling</a> 
-                            <span>11 may 2020 </span>
-                            </div>
-                        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus
-                        odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate
-                        fringilla. Donec lacinia congue felis in faucibus.</p>
-                        <a href="#reply" class="rep mt-3">Reply</a>
-                    </div>
-                    </div>
-                </div>
-            </div>
 
+            <!--post generados desde la base de datos-->
+            <% posts.forEach(post => { %>
             <div class="media bod-3">
                 <div class="img-circle">
                 <img src="../images/c3.jpg" class="img-fluid" alt="...">
                 </div>
                 <div class="media-body">
                 <div class="medi-top mb-3">
-                    <a href="#URL" class="name mt-0">Henry</a> 
+                    <a href="#URL" class="name mt-0"><%= post.nombre %></a> 
                     <span>11 may 2020 </span>
                     </div>
-                <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus
-                    odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate
-                    fringilla. Donec lacinia congue felis in faucibus.</p>
+                <p><%= post.mensaje %></p>
                     <a href="#reply" class="rep mt-3">Reply</a>
-                <div class="media mt-4 bod-4">
-                    <a class="img-circle img-circle-sm" href="#">
-                    <img src="../images/c2.jpg" class="img-fluid" alt="...">
-                    </a>
-                    <div class="media-body">
-                    <div class="medi-top mb-3">
-                        <a href="#URL" class="name mt-0">Watson</a> 
-                        <span>11 may 2020 </span>
-                        </div>
-                    <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus
-                        odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate
-                        fringilla. Donec lacinia congue felis in faucibus.</p>
-                        <a href="#reply" class="rep mt-3">Reply</a>
-                    </div>
-                </div>
                 </div>
             </div>
+            <% }); %>
 
             
             </div>
         
         <div class="testi-top mt-5">
-        
+            <% if (message) { %>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        Swal.fire({
+                            title: 'Post recibido con éxito!',
+                            text: '<%= message %>',
+                            icon: '<%= message.includes("Error") ? "error" : "seccess" %>',
+                            confirmButtonText: 'Cerrar'
+                        }).then((result) => {
+                            if(result.isConfirmed) {
+                                window.location.href = '/blog-single';
+                            }
+                        });
+                    });
+                </script>
+                
+            <% } %>
             <h3 class="post-content-title">Leave A Message</h3>
             <div class="form-commets mt-5">
-                <form action="#" method="post">
-                    
-                    
+                <form action="/submitPost" method="post">
                     <div class="media-form">
-                            <input type="text" name="Name" required="Name" placeholder="Your Name">
-                            <input type="email" name="Email" required="Email" placeholder="Your Email">
+                            <input type="text" name="nombre" required="nombre" placeholder="Your Name">
+                            <input type="email" name="email" required="email" placeholder="Your Email">
                         </div>
-                        <textarea name="Message" required="" placeholder="Write your comments here"></textarea>
+                        <textarea name="mensaje" required="" placeholder="Write your comments here"></textarea>
                         <div class="text-right">
                             <button class="btn btn-secondary btn-theme2" type="submit">Post comment</button>
                         </div>
