@@ -30,6 +30,11 @@ app.get('/single', (req, res) => {
     res.render('single');
 });
 
+//Rutas administrativas
+app.get('/admin', (req, res) => {
+    res.render('admin');
+});
+
 //Ruta para insertar formulario contactos
 app.post('/submitContacto', (req, res) => {
     const { nombre, email, telefono, mensaje } = req.body;
