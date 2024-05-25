@@ -30,11 +30,6 @@ app.get('/single', (req, res) => {
     res.render('single');
 });
 
-//Rutas administrativas
-app.get('/admin', (req, res) => {
-    res.render('admin');
-});
-
 //Ruta para insertar formulario contactos
 app.post('/submitContacto', (req, res) => {
     const { nombre, email, telefono, mensaje } = req.body;
@@ -90,6 +85,54 @@ app.get('/blog-single', (req, res) => {
 
             res.render('blog-single', { posts: results, totalPosts: totalPosts, message, totalPages, currentPage: page });
         });
+    });
+});
+
+//Rutas administrativas
+app.get('/admin', (req, res) => {
+    const countPostsSql = 'SELECT COUNT(*) AS count FROM pots';
+    const countContactsSql = 'SELECT COUNT(*) AS count FROM contacts';
+
+    db.query(countPostsSql, (err, postsCountResult) => {
+        if(err){
+            return res.status(500).send('Error al momento de contar los post');
+        }
+        const totalPosts = postsCountResult[0].count;
+
+        db.query(countContactsSql, (err, contactsCountResult) => {
+            if(err){
+                return res.status(500).send('Error al momento de contar los contactos');
+            }
+            const totalContacts = contactsCountResult[0].count;
+
+            res.render('admin', { totalPosts, totalContacts });
+        });
+    });
+});
+
+//Ruta listar post
+app.get('/listar-post', (req, res) => {
+    db.query('SELECT * FROM pots ', (err, result) => {
+        if(err) {
+            console.log(err);
+            return res.status(500).send('Error al listar los post');
+        }else {
+            console.log(result);
+            res.render('listar-post', { posts: result });
+        }
+    });
+});
+
+//Ruta listar contactos
+app.get('/listar-contactos', (req, res) => {
+    db.query('SELECT * FROM contacts ', (err, result) => {
+        if(err) {
+            console.log(err);
+            return res.status(500).send('Error al listar los contactos');
+        }else {
+            console.log(result);
+            res.render('listar-contactos', { contacts: result });
+        }
     });
 });
 
