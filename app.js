@@ -168,4 +168,20 @@ app.get('/edit-contact/:id', (req, res) => {
     });
 });
 
+//Ruta actualizar contacto
+app.post('/update-contact/:id', (req, res) => {
+    const { id } = req.params;
+    const { nombre, email, telefono, mensaje } = req.body;
+    db.query('UPDATE contacts SET nombre = ?, email = ?, telefono = ?, mensaje = ? WHERE id = ?', [ nombre, email, telefono, mensaje, id], (err, result) => {
+        if(err) {
+            console.log(err);
+            return res.status(500).send('Error al actualizar contacto');
+        }else {
+            console.log(result);
+            res.redirect('/listar-contactos');
+            //res.send('Usuario insertado con exito!');
+        }
+    });
+});
+
 module.exports = app;
