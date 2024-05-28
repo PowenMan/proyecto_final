@@ -112,7 +112,7 @@ app.get('/admin', (req, res) => {
 
 //Ruta listar post
 app.get('/listar-post', (req, res) => {
-    db.query('SELECT * FROM pots ', (err, result) => {
+    db.query('SELECT * FROM pots', (err, result) => {
         if(err) {
             console.log(err);
             return res.status(500).send('Error al listar los post');
@@ -132,6 +132,38 @@ app.get('/listar-contactos', (req, res) => {
         }else {
             console.log(result);
             res.render('listar-contactos', { contacts: result });
+        }
+    });
+});
+
+//Ruta eliminar contacto
+app.post('/delete-contact', (req, res) => {
+    const { id } = req.body;
+
+    db.query('DELETE FROM contacts WHERE id = ?', [id], (err, result) => {
+        if(err) {
+            console.log(err);
+            return res.status(500).send('Error al eliminar contacto');
+        }else {
+            console.log(result);
+            res.redirect('/listar-contactos');
+            //res.send('Usuario insertado con exito!');
+        }
+    });
+});
+
+//Ruta editar contacto
+app.get('/edit-contact/:id', (req, res) => {
+    const { id } = req.params;
+
+    db.query('SELECT * FROM contacts WHERE id = ?', [id], (err, result) => {
+        if(err) {
+            console.log(err);
+            return res.status(500).send('Error al consultar contacto');
+        }else {
+            console.log(result);
+            res.render('edit-contact', { contacts: result[0] });
+            //res.send('Usuario insertado con exito!');
         }
     });
 });
